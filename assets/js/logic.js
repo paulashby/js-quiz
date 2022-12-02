@@ -1,68 +1,65 @@
+var startBttn = document.querySelector("#start");
+var tick = 1000; // Every second
+var timeLeft;
+var timer;
 var questions = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
 var countdown = document.querySelector("#time");
-var endscreen = document.querySelector("#end-screen");
-
-
-/*
-
+var startScreen = document.querySelector("#start-screen");
+var endScreen = document.querySelector("#end-screen");
+var scoreDisplay = document.querySelector("#final-score");
+var answerStatusDisplay = document.querySelector("#answer-status");
 var questionNum;
 var currQuestion;
 var score;
+var correctfx = new Audio('./assets/sfx/correct.wav');
+var incorrectfx = new Audio('./assets/sfx/incorrect.wav');
+var pointsPerQuestion = 10;
+var penalty = tick * 10;
 
--- in init()?
-    add click listener to #start button
-    add click listener to #choices
+startBttn.addEventListener("click", onStart);
+choices.addEventListener("click", onChoose);
 
-start handler
-
+function onStart() {
     questionNum = 0;
     score = 0;
+    timeLeft = tick * 75;
+    updateCountdown();
+    timer = setInterval(onTick, tick);
+    startScreen.classList.add("hide");
+    questions.classList.remove("hide");
+    loadQuestion();
+}
 
-    Start timer - 75 seconds
-        - this is a setInterval (1000)
-            callback should               
-                - check whether time is up
-                    if so
-                        endGame()
-                    else
-                        Update content of countdown
+function onTick() {
+    timeLeft -= tick;
 
-    loadQuestion()
+    // Check if time is up
+    if (timeLeft <= 0) {
+        return endGame();
+    }
+    updateCountdown();
+}
 
-
-
-choice handler
-    get the data-index of the event target and compare to currQuestion.correctAnswer
-        if correct
-            play correct sound fx
-            increment score
-        else 
-            play incorrect sound fx
-            decrement time
-
-        displayMessage - need to add this element to the HTML, I think - you can see it on the demo
-        - says "Wrong!" or "Correct!"
-        loadQuestion()
-
-
-
-
+function updateCountdown() {
+    // Make sure non-zero before dividing
+    timerVal = timeLeft ? timeLeft/1000 : 0;
+    countdown.textContent = timerVal;
+}
 
 function loadQuestion() {
-    // Should this go in questions.js? - Don't think so
-    if no more questions
-        endGame()
-    else
-        currQuestion = questionsArray[questionNum]
-        updateQuestion()
+
+    if (questionNum >= questionsArray.length) {
+        // No more questions 
+        return endGame();
+    }
+    currQuestion = questionsArray[questionNum];
+    updateQuestion();
 }   
 
 function updateQuestion() {
-    questions.classList.remove("hide");
     // The current question will be updated every time an answer is given
-    var currQuestion = questionsArray[1];
     questionTitle.textContent = currQuestion.question;
 
     for (var i = 0; i < currQuestion.answers.length; i++) {
@@ -71,8 +68,35 @@ function updateQuestion() {
     }
 }
 
-function endGame() {
-    hide questions
-    show end-screen
+function onChoose(e) {
+    // Compare data-index of clicked choice to correctAnswer (whose value is the index of the correct answer)
+    
+    var choice = parseInt(e.target.dataset.index, 10);
+    var correct = choice === currQuestion.correctAnswer;
+
+    if (correct) {
+        correctfx.play();
+        score += pointsPerQuestion;
+    } else {
+        incorrectfx.play();
+        // Reduce time remaining, but no less than 0
+        countdown = Math.max(0, countdown - penalty);
+    }
+
+    showAnswerStatus(correct);
+    questionNum++;
+    loadQuestion();
 }
-*/
+
+function showAnswerStatus(isCorrect) {
+    // Use ternary operator to set message 
+    var message = isCorrect ? "Correct!" : "Wrong!";
+    answerStatusDisplay.textContent = message;
+}
+
+function endGame() {
+    scoreDisplay.textContent = score;
+    questions.classList.add("hide");
+    endScreen.classList.remove("hide");
+    clearInterval(timer);
+}
