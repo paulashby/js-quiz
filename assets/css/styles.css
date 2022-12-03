@@ -53,6 +53,20 @@ li:nth-child(odd) {
   background-color: #f3edfc;
 }
 
+#choices {
+  padding: 0;
+}
+
+#choices li {
+  background-color: #fff;
+  list-style: none;
+}
+
+#choices button {
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+
 .wrapper {
   margin: 100px auto 0 auto;
   max-width: 600px;

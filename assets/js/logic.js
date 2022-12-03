@@ -1,22 +1,33 @@
+/*
+
+
+Check out the demo here
+https://courses.bootcampspot.com/courses/3012/assignments/42622?module_item_id=800432
+
+
+*/
+
 var startBttn = document.querySelector("#start");
-var tick = 1000; // Every second
-var timeLeft;
-var timer;
-var questions = document.querySelector("#questions");
-var questionTitle = document.querySelector("#question-title");
-var choices = document.querySelector("#choices");
 var countdown = document.querySelector("#time");
-var startScreen = document.querySelector("#start-screen");
-var endScreen = document.querySelector("#end-screen");
-var scoreDisplay = document.querySelector("#final-score");
-var answerStatusDisplay = document.querySelector("#answer-status");
+var wrapper = document.querySelector(".wrapper");
+var startScreen = wrapper.querySelector("#start-screen");
+var endScreen = wrapper.querySelector("#end-screen");
+var feedbackDisplay = wrapper.querySelector("#feedback");
+var questions = wrapper.querySelector("#questions");
+var questionTitle = questions.querySelector("#question-title");
+var choices = questions.querySelector("#choices");
+var scoreDisplay = endScreen.querySelector("#final-score");
 var questionNum;
 var currQuestion;
 var score;
 var correctfx = new Audio('./assets/sfx/correct.wav');
 var incorrectfx = new Audio('./assets/sfx/incorrect.wav');
-var pointsPerQuestion = 10;
+var tick = 1000; // Every second
+var timeLeft;
+var timer;
+var feedbackDuration = tick;
 var penalty = tick * 10;
+var pointsPerQuestion = 10;
 
 startBttn.addEventListener("click", onStart);
 choices.addEventListener("click", onChoose);
@@ -50,6 +61,11 @@ function updateCountdown() {
 
 function loadQuestion() {
 
+    // Hide feedback
+    window.setTimeout(function(){
+        feedbackDisplay.classList.add("hide");
+    }, feedbackDuration);
+
     if (questionNum >= questionsArray.length) {
         // No more questions 
         return endGame();
@@ -64,7 +80,7 @@ function updateQuestion() {
 
     for (var i = 0; i < currQuestion.answers.length; i++) {
         choice = document.querySelector("[data-index='" + i + "']");
-        choice.textContent = currQuestion.answers[i];
+        choice.textContent = (i + 1) + ". " + currQuestion.answers[i];
     }
 }
 
@@ -88,10 +104,11 @@ function onChoose(e) {
     loadQuestion();
 }
 
-function showAnswerStatus(isCorrect) {
+function showAnswerStatus(correct) {
     // Use ternary operator to set message 
-    var message = isCorrect ? "Correct!" : "Wrong!";
-    answerStatusDisplay.textContent = message;
+    var message = correct ? "Correct!" : "Wrong!";
+    feedbackDisplay.textContent = message;
+    feedbackDisplay.classList.remove("hide");
 }
 
 function endGame() {
