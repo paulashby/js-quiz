@@ -94,7 +94,7 @@ function onChoose(e) {
     } else {
         incorrectfx.play();
         // Reduce time remaining, but no less than 0
-        countdown = Math.max(0, countdown - penalty);
+        timeLeft = Math.max(0, timeLeft - penalty);
     }
 
     showAnswerStatus(correct);
