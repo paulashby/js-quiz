@@ -60,7 +60,6 @@ function updateCountdown() {
 }
 
 function loadQuestion() {
-
     // Hide feedback
     window.setTimeout(function(){
         feedbackDisplay.classList.add("hide");
@@ -86,7 +85,6 @@ function updateQuestion() {
 
 function onChoose(e) {
     // Compare data-index of clicked choice to correctAnswer (whose value is the index of the correct answer)
-    
     var choice = parseInt(e.target.dataset.index, 10);
     var correct = choice === currQuestion.correctAnswer;
 
