@@ -48,7 +48,7 @@ function onTick() {
 
     // Check if time is up
     if (timeLeft <= 0) {
-        return endGame();
+        return endGame(true);
     }
     updateCountdown();
 }
@@ -109,9 +109,13 @@ function showAnswerStatus(correct) {
     feedbackDisplay.classList.remove("hide");
 }
 
-function endGame() {
+function endGame(timeUp = false) {
     scoreDisplay.textContent = score;
     questions.classList.add("hide");
     endScreen.classList.remove("hide");
     clearInterval(timer);
+
+    if(timeUp) {
+        countdown.textContent = "0";    
+    }
 }
