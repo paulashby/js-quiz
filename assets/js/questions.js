@@ -1,25 +1,52 @@
-// The idea here is that we can give each answer button a data-index attribute
-// Then we check whether that matches correctAnswer.
-// I'll vary the index of the correct answer, so I don't need to worry about shuffling them
 var questionsArray = [
     {
-        question: "Which of the following is not a logical operator?",        
+        question: "Commonly used data types DO NOT include",
         answers: [
-            ["||"],
-            ["="],
-            ["&&"],
-            ["!"]
+            ["strings"],
+            ["booleans"],
+            ["alerts"],
+            ["numbers"]
         ],
-        correctAnswer: 1
+        correctAnswer: 2
     },
     {
-        question: "Which of the following evaluates to true?",
+        question: "The condition in an if / else statement is enclosed with ____________.",
         answers: [
-            ["1 == true"],
-            ["1 === '1'"],            
-            ["true == false"],
-            ["1 === true"]
+            ["quotes"],
+            ["curly brackets"],
+            ["parenthesis"],
+            ["square brackets"]
         ],
-        correctAnswer: 0
+        correctAnswer: 2
+    },
+    {
+        question: "Arrays in JavaScript can be used to store ____________.",
+        answers: [
+            ["numbers and strings"],
+            ["other arrays"],
+            ["booleans"],
+            ["all of the above"]
+        ],
+        correctAnswer: 3
+    },
+    {
+        question: "String values must be enclosed within ____________ when being assigned to variables.",
+        answers: [
+            ["commas"],
+            [" curly brackets"],
+            [" quotes"],
+            ["parenthesis"],
+        ],
+        correctAnswer: 2
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        answers: [
+            ["JavaScript"],
+            [" terminal/bash"],
+            ["for loops"],
+            ["console.log"]
+        ],
+        correctAnswer: 3
     }
 ]
