@@ -1,17 +1,9 @@
-/*
-
-
-Check out the demo here
-https://courses.bootcampspot.com/courses/3012/assignments/42622?module_item_id=800432
-
-
-*/
-
 var startBttn = document.querySelector("#start");
 var countdown = document.querySelector("#time");
 var wrapper = document.querySelector(".wrapper");
 var startScreen = wrapper.querySelector("#start-screen");
 var endScreen = wrapper.querySelector("#end-screen");
+var hiScoreBttn = endScreen.querySelector("#submit");
 var feedbackDisplay = wrapper.querySelector("#feedback");
 var questions = wrapper.querySelector("#questions");
 var questionTitle = questions.querySelector("#question-title");
@@ -31,11 +23,13 @@ var pointsPerQuestion = 10;
 
 startBttn.addEventListener("click", onStart);
 choices.addEventListener("click", onChoose);
+hiScoreBttn.addEventListener("click", onSave);
 
 function onStart() {
     questionNum = 0;
     score = 0;
-    timeLeft = tick * 75;
+    // timeLeft = tick * 75;
+    timeLeft = tick * 10;
     updateCountdown();
     timer = setInterval(onTick, tick);
     startScreen.classList.add("hide");
@@ -118,4 +112,16 @@ function endGame(timeUp = false) {
     if(timeUp) {
         countdown.textContent = "0";    
     }
+}
+
+function onSave() {
+    var initials = endScreen.querySelector("#initials").value;
+    var previousBest = window.localStorage.getItem(initials);
+
+    if (score < previousBest && prompt("This is not your all time best. OK to replace the higher value with your current score?") == null) {
+        return;
+    }
+
+    window.localStorage.setItem(initials, score);
+    window.location = "./highscores.html";     
 }
