@@ -3,8 +3,7 @@ var countdown = document.querySelector("#time");
 var wrapper = document.querySelector(".wrapper");
 var startScreen = wrapper.querySelector("#start-screen");
 var endScreen = wrapper.querySelector("#end-screen");
-var hiScoreBttn = endScreen.querySelector("#submit");
-var feedbackDisplay = wrapper.querySelector("#feedback");
+var highScoreBttn = endScreen.querySelector("#submit");
 var questions = wrapper.querySelector("#questions");
 var questionTitle = questions.querySelector("#question-title");
 var choices = questions.querySelector("#choices");
@@ -17,19 +16,17 @@ var incorrectfx = new Audio('./assets/sfx/incorrect.wav');
 var tick = 1000; // Every second
 var timeLeft;
 var timer;
-var feedbackDuration = tick;
 var penalty = tick * 10;
 var pointsPerQuestion = 10;
 
 startBttn.addEventListener("click", onStart);
 choices.addEventListener("click", onChoose);
-hiScoreBttn.addEventListener("click", onSave);
+highScoreBttn.addEventListener("click", onSave);
 
 function onStart() {
     questionNum = 0;
     score = 0;
-    // timeLeft = tick * 75;
-    timeLeft = tick * 10;
+    timeLeft = tick * 75;
     updateCountdown();
     timer = setInterval(onTick, tick);
     startScreen.classList.add("hide");
@@ -54,10 +51,6 @@ function updateCountdown() {
 }
 
 function loadQuestion() {
-    // Hide feedback
-    window.setTimeout(function(){
-        feedbackDisplay.classList.add("hide");
-    }, feedbackDuration);
 
     if (questionNum >= questionsArray.length) {
         // No more questions 
@@ -99,29 +92,50 @@ function onChoose(e) {
 function showAnswerStatus(correct) {
     // Use ternary operator to set message 
     var message = correct ? "Correct!" : "Wrong!";
-    feedbackDisplay.textContent = message;
-    feedbackDisplay.classList.remove("hide");
+    feedback(message);
 }
 
 function endGame(timeUp = false) {
-    scoreDisplay.textContent = score;
-    questions.classList.add("hide");
-    endScreen.classList.remove("hide");
+    // Stop timer
     clearInterval(timer);
 
     if(timeUp) {
+        // If game ended as time ran out, set the countdown to reflect this
         countdown.textContent = "0";    
-    }
+    } 
+
+    scoreDisplay.textContent = score;
+    questions.classList.add("hide");
+    feedbackDisplay.classList.add("hide");
+    endScreen.classList.remove("hide");
 }
 
 function onSave() {
     var initials = endScreen.querySelector("#initials").value;
-    var previousBest = window.localStorage.getItem(initials);
+    var highscoreData = window.localStorage.getItem("highscores");
 
-    if (score < previousBest && prompt("This is not your all time best. OK to replace the higher value with your current score?") == null) {
-        return;
+    if (highscoreData === null) {
+        highscoreData = {};
+    }  else {
+        highscoreData = JSON.parse(highscoreData);
     }
+    
+    // If previousBest is null, calling parseInt on it will return NaN, Which is fine 
+    // as the remaining conditionals will still give us the correct behaviour
+    var previousBest = parseInt(highscoreData[initials]);
 
-    window.localStorage.setItem(initials, score);
-    window.location = "./highscores.html";     
+    if (score < previousBest) {
+        // Register fact that score was not saved as it is not personal best 
+        window.localStorage.setItem("feedback", "Pretty good, but not a personal best.");
+    } else if (score === previousBest) {
+        // Register fact that score was not saved as it is not personal best 
+        window.localStorage.setItem("feedback", "You've equalled your personal best.");
+    } else {
+        highscoreData[initials] = score;
+        // Update record in localStorage
+        window.localStorage.setItem("highscores", JSON.stringify(highscoreData)); 
+        window.localStorage.setItem("feedback", "Nice going " + initials + ", that was a personal best!");
+    }  
+    // Load highscores page
+    window.location = "./highscores.html";  
 }

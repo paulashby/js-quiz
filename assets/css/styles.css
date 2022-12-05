@@ -100,3 +100,8 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+.scores #feedback {
+  font-size: 1.12rem;
+  font-weight: bold;
+}
