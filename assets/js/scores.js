@@ -9,16 +9,17 @@ window.localStorage.removeItem("feedback");
 clearBttn.addEventListener("click", onClear);
 
 if (scoreMessage) {
+    // Log user performance feedback message
     feedback(scoreMessage);
 }
 
-// Iterate over items in localStorage and add to the list of scores
 var highscoreData = window.localStorage.getItem("highscores");
 
 if (highscoreData) {
     // Convert to object
     highscoreData = JSON.parse(highscoreData);
 
+    // Add score data to highscores list
     for (var [key, value] of Object.entries(highscoreData)) {
         var entry = document.createElement("li");
         entry.textContent = key + ": " + value;

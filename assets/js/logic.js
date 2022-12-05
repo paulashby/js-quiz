@@ -48,7 +48,7 @@ function updateCountdown() {
 function loadQuestion() {
     currQuestion = questionsArray[questionNum];
     
-    // The current question will be updated every time an answer is given
+    // The current question will be updated when answer status is shown
     questionTitle.textContent = currQuestion.question;
 
     for (var i = 0; i < currQuestion.answers.length; i++) {
@@ -105,12 +105,13 @@ function onSave() {
     var previousBest = parseInt(highscoreData[initials]);
 
     if (score < previousBest) {
-        // Register fact that score was not saved as it is not personal best 
+        // Score not updated as not personal best 
         window.localStorage.setItem("feedback", "Pretty good, but not a personal best.");
     } else if (score === previousBest) {
-        // Register fact that score was not saved as it is not personal best 
+        // Score not updated as not better than personal best  
         window.localStorage.setItem("feedback", "You've equalled your personal best.");
     } else {
+        // Personal best - update score
         highscoreData[initials] = score;
         // Update record in localStorage
         window.localStorage.setItem("highscores", JSON.stringify(highscoreData)); 
