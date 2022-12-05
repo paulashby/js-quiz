@@ -7,9 +7,7 @@ JavaScript exercise for Trilogy Front End Development Bootcamp
 
 This challenge was set as part of [the Trilogy Skills Bootcamp in Front-End Web Development](https://skillsforlife.edx.org/coding/frontend/landing/?s=Google-Unbranded&pkw=web%20design%20training&pcrid=624628533241&pmt=p&utm_source=google&utm_medium=cpc&utm_campaign=GGL%7CSKILLS-FOR-LIFE%7CSEM%7CCODING%7C-%7COFL%7CTIER-1%7CALL%7CNBD-G%7CBMM%7CPrimary%7CSubject-Matter&utm_term=web%20design%20training&s=google&k=web%20design%20training&utm_adgroupid=140443158663&utm_locationphysicalms=1006886&utm_matchtype=p&utm_network=g&utm_device=c&utm_content=624628533241&utm_placement=&gclid=Cj0KCQjwqc6aBhC4ARIsAN06NmMdwBRSe3BLeaChkukN5Bbqb18220k1ku9TB2o9tzsX0xYUc-dlRWgaAuyvEALw_wcB&gclsrc=aw.ds). The starter files we were provided can be viewed in [this commit](https://github.com/paulashby/js-quiz/tree/1004e732284a0094312a75ffc5a1413007526880).
 
-The acceptance criterea were as follows:
-
-Create a code quiz that contains the following requirements:
+The acceptance criterea were to create a code quiz that contains the following requirements:
 
 * A start button that when clicked a timer starts and the first question appears.
  
