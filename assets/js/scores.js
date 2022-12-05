@@ -25,6 +25,8 @@ if (highscoreData) {
         entry.textContent = key + ": " + value;
         highscores.appendChild(entry);
     }
+} else {
+    feedback("No highscores to show.");
 }
 
 function onClear() {
