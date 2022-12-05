@@ -1,13 +1,9 @@
 var startBttn = document.querySelector("#start");
 var countdown = document.querySelector("#time");
-var wrapper = document.querySelector(".wrapper");
 var startScreen = wrapper.querySelector("#start-screen");
-var endScreen = wrapper.querySelector("#end-screen");
 var highScoreBttn = endScreen.querySelector("#submit");
-var questions = wrapper.querySelector("#questions");
 var questionTitle = questions.querySelector("#question-title");
 var choices = questions.querySelector("#choices");
-var scoreDisplay = endScreen.querySelector("#final-score");
 var questionNum;
 var currQuestion;
 var score;
@@ -15,7 +11,6 @@ var correctfx = new Audio('./assets/sfx/correct.wav');
 var incorrectfx = new Audio('./assets/sfx/incorrect.wav');
 var tick = 1000; // Every second
 var timeLeft;
-var timer;
 var penalty = tick * 10;
 var pointsPerQuestion = 10;
 
@@ -51,16 +46,8 @@ function updateCountdown() {
 }
 
 function loadQuestion() {
-
-    if (questionNum >= questionsArray.length) {
-        // No more questions 
-        return endGame();
-    }
     currQuestion = questionsArray[questionNum];
-    updateQuestion();
-}   
-
-function updateQuestion() {
+    
     // The current question will be updated every time an answer is given
     questionTitle.textContent = currQuestion.question;
 
@@ -85,29 +72,22 @@ function onChoose(e) {
     }
 
     showAnswerStatus(correct);
-    questionNum++;
-    loadQuestion();
 }
 
 function showAnswerStatus(correct) {
     // Use ternary operator to set message 
     var message = correct ? "Correct!" : "Wrong!";
-    feedback(message);
-}
 
-function endGame(timeUp = false) {
-    // Stop timer
-    clearInterval(timer);
+    questionNum++;
 
-    if(timeUp) {
-        // If game ended as time ran out, set the countdown to reflect this
-        countdown.textContent = "0";    
-    } 
-
-    scoreDisplay.textContent = score;
-    questions.classList.add("hide");
-    feedbackDisplay.classList.add("hide");
-    endScreen.classList.remove("hide");
+    if (questionNum >= questionsArray.length) {
+        // No more questions - pass second arg so feedback calls endGame() after showing message
+        feedback(message, true);
+    } else {
+        // Show feedback and load next question
+        feedback(message);
+        loadQuestion();
+    }
 }
 
 function onSave() {
