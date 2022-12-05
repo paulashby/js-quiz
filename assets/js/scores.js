@@ -20,7 +20,6 @@ if (highscoreData) {
     highscoreData = JSON.parse(highscoreData);
 
     for (var [key, value] of Object.entries(highscoreData)) {
-        // Set value to zero if not already in localStorage
         var entry = document.createElement("li");
         entry.textContent = key + ": " + value;
         highscores.appendChild(entry);
