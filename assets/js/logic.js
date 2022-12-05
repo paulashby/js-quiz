@@ -19,6 +19,8 @@ choices.addEventListener("click", onChoose);
 highScoreBttn.addEventListener("click", onSave);
 
 function onStart() {
+    var timerDisplay = document.querySelector(".timer");
+    timerDisplay.classList.remove("hide");
     questionNum = 0;
     score = 0;
     timeLeft = tick * 75;
