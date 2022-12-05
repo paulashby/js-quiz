@@ -1,7 +1,7 @@
 var wrapper = document.querySelector(".wrapper");
 var questions = wrapper.querySelector("#questions");
 var endScreen = wrapper.querySelector("#end-screen");
-var feedbackDisplay = document.querySelector("#feedback");
+var feedbackDisplay = wrapper.querySelector("#feedback");
 var feedbackDuration = 1500;
 var timer;
 
