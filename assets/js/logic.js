@@ -81,7 +81,9 @@ function showAnswerStatus(correct) {
     questionNum++;
 
     if (questionNum >= questionsArray.length) {
-        // No more questions - pass second arg so feedback calls endGame() after showing message
+        // No more questions - disable choices so answers from previous question can't be clicked
+        choices.removeEventListener("click", onChoose);
+        // pass second arg so feedback calls endGame() after showing message
         feedback(message, true);
     } else {
         // Show feedback and load next question
