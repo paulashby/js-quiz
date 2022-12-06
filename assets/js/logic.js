@@ -42,8 +42,7 @@ function onTick() {
 }
 
 function updateCountdown() {
-    // Make sure non-zero before dividing
-    timerVal = timeLeft ? timeLeft/1000 : 0;
+    timerVal = timeLeft/1000;
     countdown.textContent = timerVal;
 }
 
